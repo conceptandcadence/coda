@@ -35,7 +35,7 @@ export default function LayoutBlogPost({
 }) {
   return (
     <>
-      <div className="pointer-events-none fixed left-0 top-0 z-10 h-12 w-full bg-[var(--palette-bg)] to-transparent backdrop-blur-xl [-webkit-mask-image:linear-gradient(to_bottom,black,transparent)]" />
+      <div className="pointer-events-none fixed left-0 top-0 z-10 h-12 w-full bg-(--app-bg) to-transparent backdrop-blur-xl [-webkit-mask-image:linear-gradient(to_bottom,black,transparent)]" />
       <ScrollProgress
         className="fixed top-0 z-20 h-0.5 bg-current/40"
         springOptions={{

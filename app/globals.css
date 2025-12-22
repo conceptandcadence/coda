@@ -18,6 +18,27 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentColor);
   }
+
+  /* Text selection highlight (match cursor color / app palette) */
+  ::selection {
+    /* Use a translucent tint so selection stays visible even in low-contrast palettes */
+    background: color-mix(
+      in oklab,
+      var(--cursor-color, var(--app-fg)),
+      transparent 65%
+    );
+    color: var(--app-fg);
+  }
+
+  /* Firefox */
+  ::-moz-selection {
+    background: color-mix(
+      in oklab,
+      var(--cursor-color, var(--app-fg)),
+      transparent 65%
+    );
+    color: var(--app-fg);
+  }
 }
 
 :root {
@@ -33,28 +54,41 @@
   /* Palette system (user will customize colors per stage) */
   --palette-bg: #5978a6;
   --palette-fg: #1a1919;
+
+  /* App colors = palette */
+  --app-bg: var(--palette-bg);
+  --app-fg: var(--palette-fg);
+
+  /* Cursor color (override per stage if desired) */
+  --cursor-color: var(--palette-fg);
+
 }
 
 /* 5-stage palette definitions (update these colors as desired) */
 html[data-stage='1'] {
-  --palette-bg: #5978a6;
-  --palette-fg: #1a1919;
+  --palette-bg: #427348;
+  --palette-fg: #a9ade5;
+  --cursor-color: var(--palette-fg);
 }
 html[data-stage='2'] {
-  --palette-bg: #1f2309;
-  --palette-fg: #5b63a9;
+  --palette-bg: #A68450;
+  --palette-fg: #562C1A;
+  --cursor-color: var(--palette-fg);
 }
 html[data-stage='3'] {
-  --palette-bg: #2b2a67;
-  --palette-fg: #f0e7d8;
+  --palette-bg: #1A273A;
+  --palette-fg: #882F2F;
+  --cursor-color: var(--palette-fg);
 }
 html[data-stage='4'] {
-  --palette-bg: #0f2a2c;
-  --palette-fg: #e9f3f4;
+  --palette-bg: #031125;
+  --palette-fg: #625D8E;
+  --cursor-color: var(--palette-fg);
 }
 html[data-stage='5'] {
-  --palette-bg: #5b1b2a;
-  --palette-fg: #f7efe8;
+  --palette-bg: #242D22;
+  --palette-fg: #5D62A3;
+  --cursor-color: var(--palette-fg);
 }
 
 /* Smooth palette transitions */

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFD37A"/>
+      <stop offset="1" stop-color="#FFB84D"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#000" fill-opacity="0"/>
+  <g transform="translate(32 32)">
+    <g opacity="0.95">
+      <circle r="12" fill="url(#g)"/>
+      <g stroke="#FFD37A" stroke-width="3" stroke-linecap="round">
+        <line x1="0" y1="-22" x2="0" y2="-28"/>
+        <line x1="0" y1="22" x2="0" y2="28"/>
+        <line x1="-22" y1="0" x2="-28" y2="0"/>
+        <line x1="22" y1="0" x2="28" y2="0"/>
+        <line x1="16" y1="-16" x2="20" y2="-20"/>
+        <line x1="-16" y1="16" x2="-20" y2="20"/>
+        <line x1="-16" y1="-16" x2="-20" y2="-20"/>
+        <line x1="16" y1="16" x2="20" y2="20"/>
+      </g>
+    </g>
+    <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="6s" repeatCount="indefinite"/>
+  </g>
+</svg>
+
+

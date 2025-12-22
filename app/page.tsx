@@ -1,6 +1,9 @@
 'use client'
 import { motion } from 'motion/react'
 import * as React from 'react'
+import { EmailMagneticLink } from '@/components/email-magnetic-link'
+import Link from 'next/link'
+import { useMagneticPull } from 'motion-plus/react'
 import { ABOUT } from './data'
 import { useLanguage } from './language-provider'
 
@@ -20,6 +23,9 @@ export default function Personal() {
   const { lang, initialized } = useLanguage()
   const [ready, setReady] = React.useState(false)
   const headerDelay = 0.35
+  const privacyLabel = lang === 'pt' ? 'Privacidade' : 'Privacy'
+  const privacyRef = React.useRef<HTMLSpanElement>(null)
+  const privacyPull = useMagneticPull(privacyRef, 0.1)
 
   React.useEffect(() => {
     if (!initialized) return
@@ -32,7 +38,7 @@ export default function Personal() {
 
   return (
     <motion.main
-      className="space-y-12 lg:space-y-24"
+      className="space-y-12"
       initial="hidden"
       animate={ready ? 'visible' : 'hidden'}
     >
@@ -42,7 +48,7 @@ export default function Personal() {
           transition={{ ...TRANSITION_SECTION, delay: headerDelay }}
         >
           <div
-            className="prose max-w-none text-3xl lg:text-4xl font-(family-name:--font-vesper-libre) text-current prose-headings:text-current prose-p:text-current prose-a:text-current prose-strong:text-current prose-li:text-current"
+            className="prose max-w-none text-3xl lg:text-4xl font-(family-name:--font-vesper-libre) text-current prose-headings:text-current prose-p:text-current prose-a:text-current prose-strong:text-current prose-li:text-current mt-12"
             dangerouslySetInnerHTML={{ __html: ABOUT.content[lang] }}
           />
         </motion.div>
@@ -51,11 +57,25 @@ export default function Personal() {
         variants={VARIANTS_SECTION}
         transition={{ ...TRANSITION_SECTION, delay: headerDelay + 0.15 }}
       >
-        <h3 className="font-(family-name:--font-geist-mono) mb-3 lg:mb-5 text-sm font-medium ">{ABOUT.contact[lang]}</h3>
+        <h3 className="font-(family-name:--font-sometype-mono) mb-3 lg:mb-5 text-sm font-medium ">{ABOUT.contact[lang]}</h3>
         <p className="mb-5 font-(family-name:--font-vesper-libre) text-current">
-          <a className="text-3xl lg:text-4xl" href={`mailto:${ABOUT.email}`}>
-            {ABOUT.email}
-          </a>
+          <EmailMagneticLink
+            email={ABOUT.email}
+            className="text-3xl lg:text-4xl"
+          />
+        </p>
+        <p className="font-(family-name:--font-sometype-mono) text-sm text-current mt-24">
+          <Link href="/privacy" data-cursor-zone="overlay" className="font-medium">
+            <motion.span
+              ref={privacyRef}
+              // motion-plus MotionValue types can differ slightly from motion/react types
+              // (depends on dependency resolution). Runtime behavior is correct.
+              style={privacyPull as any}
+              className="underline underline-offset-4 hover:text-current"
+            >
+              {privacyLabel}
+            </motion.span>
+          </Link>
         </p>
       </motion.section>
     </motion.main>
