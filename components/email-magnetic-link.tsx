@@ -3,6 +3,7 @@
 import { useMagneticPull } from 'motion-plus/react'
 import { motion } from 'motion/react'
 import * as React from 'react'
+import { preventClickIfSelectingText } from '@/lib/prevent-click-on-selection'
 
 type EmailMagneticLinkProps = {
   email: string
@@ -20,9 +21,12 @@ export function EmailMagneticLink({ email, className }: EmailMagneticLinkProps) 
       data-cursor-zone="overlay"
       className={className}
       whileTap={{ scale: 0.98 }}
+      onClickCapture={preventClickIfSelectingText}
     >
       <motion.span
-        style={pull}
+        // motion-plus MotionValue types can differ slightly from motion/react types
+        // (depends on dependency resolution). Runtime behavior is correct.
+        style={pull as any}
         variants={{ pressed: { scale: 0.98 } }}
         className="inline-block"
       >

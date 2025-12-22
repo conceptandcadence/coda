@@ -3,6 +3,7 @@
 import * as React from 'react'
 import Link from 'next/link'
 import { useLanguage } from '../language-provider'
+import { preventClickIfSelectingText } from '@/lib/prevent-click-on-selection'
 
 const COPY = {
   en: {
@@ -59,6 +60,7 @@ export function PrivacyContent() {
             href="/"
             data-cursor-zone="overlay"
             className="inline-flex items-center gap-2 text-current font-medium"
+            onClickCapture={preventClickIfSelectingText}
           >
             {t.back}
           </Link>
@@ -115,6 +117,7 @@ export function PrivacyContent() {
               className="text-current underline underline-offset-8"
               href="mailto:hello@lukeragno.com"
               data-cursor-zone="overlay"
+              onClickCapture={preventClickIfSelectingText}
             >
               hello@lukeragno.com
             </a>

@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { useMagneticPull } from 'motion-plus/react'
 import { ABOUT } from './data'
 import { useLanguage } from './language-provider'
+import { preventClickIfSelectingText } from '@/lib/prevent-click-on-selection'
 
 const VARIANTS_SECTION = {
   hidden: { opacity: 0, y: 20, filter: 'blur(8px)' },
@@ -65,7 +66,12 @@ export default function Personal() {
           />
         </p>
         <p className="font-(family-name:--font-sometype-mono) text-sm text-current mt-24">
-          <Link href="/privacy" data-cursor-zone="overlay" className="font-medium">
+          <Link
+            href="/privacy"
+            data-cursor-zone="overlay"
+            className="font-medium"
+            onClickCapture={preventClickIfSelectingText}
+          >
             <motion.span
               ref={privacyRef}
               // motion-plus MotionValue types can differ slightly from motion/react types
