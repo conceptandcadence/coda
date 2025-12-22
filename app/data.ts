@@ -26,6 +26,39 @@ type SocialLink = {
   label: string
   link: string
 }
+const greetings = {
+	en: {
+		morning: '🌅 Bom Dia',
+		afternoon: '☀️ Boa Tarde',
+		evening: '🌆 Boa Tarde',
+		night: '🌙 Boa Noite',
+	},
+	pt: {
+		morning: '🌅 Bom Dia',
+		afternoon: '☀️ Boa Tarde',
+		evening: '🌆 Boa Tarde',
+		night: '🌙 Boa Noite',
+	},
+}
+
+export const ABOUT = {
+  name: 'Luke Ragno',
+  email: 'me@lukeragno.com',
+  contact: {
+    en: 'Contact',
+    pt: 'Contacto',
+  },
+  content: {
+    en: `<p>My name is Luke Ragno.</p>
+<p class="not-prose mb-4">I’m a designer and developer, originally from the United States, based in Porto, where I’ve lived for two years.</p>
+<p class="not-prose mb-4">I work on projects connected to technology, culture, and independent work.</p>
+<p class="not-prose mb-4">I’m currently developing a project focused on supporting independent instructors&mdash;helping them organize their work, stay connected with students, and create more day-to-day stability.</p>`,
+    pt: `<p>Chamo-me Luke Ragno.</p>
+<p class="not-prose mb-4">Sou designer e desenvolvedor, originalmente dos Estados Unidos, baseado no Porto, onde vivo há dois anos.</p>
+<p class="not-prose mb-4">Trabalho em projetos ligados a tecnologia, cultura e trabalho independente.</p>
+<p class="not-prose mb-4">Atualmente estou a desenvolver um projeto focado em apoiar instrutores independentes&mdash;ajudando a organizar o trabalho, manter ligação com os alunos e criar mais estabilidade no dia a dia.</p>`,
+  },
+}
 
 export const PROJECTS: Project[] = [
   {
@@ -106,11 +139,11 @@ export const BLOG_POSTS: BlogPost[] = [
 export const SOCIAL_LINKS: SocialLink[] = [
   {
     label: 'Github',
-    link: 'https://github.com/ibelick',
+    link: 'https://github.com/lukeragno',
   },
   {
     label: 'Twitter',
-    link: 'https://twitter.com/ibelick',
+    link: 'https://twitter.com/lukeragno',
   },
   {
     label: 'LinkedIn',
@@ -122,4 +155,4 @@ export const SOCIAL_LINKS: SocialLink[] = [
   },
 ]
 
-export const EMAIL = 'your@email.com'
+export const EMAIL = 'me@lukeragno.com'

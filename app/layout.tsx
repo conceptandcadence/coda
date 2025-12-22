@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Vesper_Libre, Geist_Mono } from 'next/font/google'
 import './globals.css'
-import { Header } from './header'
-import { Footer } from './footer'
-import { ThemeProvider } from 'next-themes'
+import { AnimatedHeader } from './animated-header'
+import { LanguageProvider } from './language-provider'
+import { PaletteProvider } from './palette-provider'
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -17,15 +17,16 @@ export const metadata: Metadata = {
     canonical: '/'
   },
   title: {
-    default: 'Nim - Personal website template',
+    default: 'Luke Ragno',
     template: '%s | Nim'
   },
-  description:  'Nim is a free and open-source personal website template built with Next.js 15, React 19 and Motion-Primitives.',
+  description:  'An american designer and developer based in Porto, Portugal.',
 };
 
-const geist = Geist({
-  variable: '--font-geist',
+const geist = Vesper_Libre({
+  variable: '--font-vesper-libre',
   subsets: ['latin'],
+  weight: ['400', '500', '700', '900'],
 })
 
 const geistMono = Geist_Mono({
@@ -39,24 +40,20 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="pt" suppressHydrationWarning>
       <body
-        className={`${geist.variable} ${geistMono.variable} bg-white tracking-tight antialiased dark:bg-zinc-950`}
+        className={`${geist.variable} ${geistMono.variable} bg-(--palette-bg) text-(--palette-fg) tracking-tight antialiased`}
       >
-        <ThemeProvider
-          enableSystem={true}
-          attribute="class"
-          storageKey="theme"
-          defaultTheme="system"
-        >
-          <div className="flex min-h-screen w-full flex-col font-[family-name:var(--font-inter-tight)]">
-            <div className="relative mx-auto w-full max-w-screen-sm flex-1 px-4 pt-20">
-              <Header />
-              {children}
-              <Footer />
+        <PaletteProvider>
+          <LanguageProvider>
+            <div className="flex min-h-screen w-full flex-col font-(family-name:--font-inter-tight)">
+              <div className="relative mx-auto w-full max-w-screen-md flex-1 px-4 py-20">
+                <AnimatedHeader />
+                {children}
+              </div>
             </div>
-          </div>
-        </ThemeProvider>
+          </LanguageProvider>
+        </PaletteProvider>
       </body>
     </html>
   )

@@ -29,4 +29,54 @@
   --sh-jsxliterals: #7aa2f7;
   --sh-property: #73daca;
   --sh-entity: #e0af68;
+
+  /* Palette system (user will customize colors per stage) */
+  --palette-bg: #5978a6;
+  --palette-fg: #1a1919;
+}
+
+/* 5-stage palette definitions (update these colors as desired) */
+html[data-stage='1'] {
+  --palette-bg: #5978a6;
+  --palette-fg: #1a1919;
+}
+html[data-stage='2'] {
+  --palette-bg: #1f2309;
+  --palette-fg: #5b63a9;
+}
+html[data-stage='3'] {
+  --palette-bg: #2b2a67;
+  --palette-fg: #f0e7d8;
+}
+html[data-stage='4'] {
+  --palette-bg: #0f2a2c;
+  --palette-fg: #e9f3f4;
+}
+html[data-stage='5'] {
+  --palette-bg: #5b1b2a;
+  --palette-fg: #f7efe8;
+}
+
+/* Smooth palette transitions */
+@media (prefers-reduced-motion: no-preference) {
+  body {
+    transition:
+      background-color 500ms cubic-bezier(0.22, 1, 0.36, 1),
+      color 500ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  body * {
+    transition:
+      color 500ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 500ms cubic-bezier(0.22, 1, 0.36, 1),
+      fill 500ms cubic-bezier(0.22, 1, 0.36, 1),
+      stroke 500ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body,
+  body * {
+    transition: none !important;
+  }
 }
