@@ -21,7 +21,7 @@ const TRANSITION_SECTION = {
 }
 
 export default function Personal() {
-  const { lang, initialized } = useLanguage()
+  const { lang } = useLanguage()
   const [ready, setReady] = React.useState(false)
   const headerDelay = 0.35
   const privacyLabel = lang === 'pt' ? 'Privacidade' : 'Privacy'
@@ -29,13 +29,8 @@ export default function Personal() {
   const privacyPull = useMagneticPull(privacyRef, 0.1)
 
   React.useEffect(() => {
-    if (!initialized) return
     setReady(true)
-  }, [initialized])
-
-  if (!initialized) {
-    return null
-  }
+  }, [])
 
   return (
     <motion.main

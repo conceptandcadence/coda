@@ -22,7 +22,7 @@ const COPY = {
       'Legal basis: legitimate interests (measuring and improving the performance and content of the site).',
     localPrefsTitle: 'Local preferences',
     localPrefsBody:
-      'This site may store small preference cookies in your browser (for example, language and color/palette choices). These are used only to remember your settings on this device. These cookies expire after 1 hour.',
+      'This site may store small preference cookies in your browser (for example, language and color/palette choices). These are used only to remember your settings on this device. These cookies expire after 1 year.',
     contactTitle: 'Contact',
     contactBody: 'If you have questions about privacy, contact',
   },
@@ -42,7 +42,7 @@ const COPY = {
       'Base legal: interesses legítimos (medir e melhorar o desempenho e o conteúdo do site).',
     localPrefsTitle: 'Preferências locais',
     localPrefsBody:
-      'Este site pode guardar pequenos cookies de preferência no seu navegador (por exemplo, idioma e escolhas de cor/paleta). Isto serve apenas para lembrar as suas definições neste dispositivo. Estes cookies expiram após 1 hora.',
+      'Este site pode guardar pequenos cookies de preferência no seu navegador (por exemplo, idioma e escolhas de cor/paleta). Isto serve apenas para lembrar as suas definições neste dispositivo. Estes cookies expiram após 1 ano.',
     contactTitle: 'Contacto',
     contactBody: 'Se tiver dúvidas sobre privacidade, contacte',
   },

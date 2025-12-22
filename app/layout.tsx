@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next'
+import { cookies } from 'next/headers'
 import { Vesper_Libre, Sometype_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/react'
 import './globals.css'
@@ -43,13 +44,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const languageCookie = cookies().get('language')?.value
+  const initialLang = languageCookie === 'en' ? 'en' : 'pt'
+
   return (
-    <html lang="pt" suppressHydrationWarning>
+    <html lang={initialLang} suppressHydrationWarning>
       <body
         className={`${geist.variable} ${sometypeMono.variable} bg-(--app-bg) text-(--app-fg) tracking-tight antialiased`}
       >
         <PaletteProvider>
-          <LanguageProvider>
+          <LanguageProvider initialLang={initialLang}>
             <AnimatedFavicon />
             <MotionCursor />
             <div className="flex min-h-screen w-full flex-col font-(family-name:--font-inter-tight)">
