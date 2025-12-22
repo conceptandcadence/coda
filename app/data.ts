@@ -50,12 +50,12 @@ export const ABOUT = {
   },
   content: {
     en: `<p>My name is Luke Ragno.</p>
-<p class="not-prose mb-4">I’m a designer and developer, originally from the United States, based in Porto, where I’ve lived for a few years.</p>
-<p class="not-prose mb-4">I work on projects connected to technology, culture, and independent work.</p>
+<p class="not-prose mb-4">I’m a designer and developer, originally from the United States, based in Porto, where I’ve lived for several years.</p>
+<p class="not-prose mb-4">I’m drawn to work at the intersection of technology, culture, and independent work.</p>
 <p class="not-prose mb-4">I’m currently developing a project focused on supporting independent instructors&mdash;helping them organize their work, stay connected with students, and create more day-to-day stability.</p>`,
     pt: `<p>Chamo-me Luke Ragno.</p>
 <p class="not-prose mb-4">Sou designer e desenvolvedor, originalmente dos Estados Unidos, baseado no Porto, onde vivo há alguns anos.</p>
-<p class="not-prose mb-4">Trabalho em projetos ligados a tecnologia, cultura e trabalho independente.</p>
+<p class="not-prose mb-4">Interessa-me trabalhar na interseção entre tecnologia, cultura e trabalho independente.</p>
 <p class="not-prose mb-4">Atualmente estou a desenvolver um projeto focado em apoiar instrutores independentes&mdash;ajudando a organizar o trabalho, manter ligação com os alunos e criar mais estabilidade no dia a dia.</p>`,
   },
 }
