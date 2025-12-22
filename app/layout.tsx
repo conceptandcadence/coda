@@ -39,12 +39,13 @@ const sometypeMono = Sometype_Mono({
   weight: 'variable',
 })
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const languageCookie = cookies().get('language')?.value
+  const cookieStore = await cookies()
+  const languageCookie = cookieStore.get('language')?.value
   const initialLang = languageCookie === 'en' ? 'en' : 'pt'
 
   return (
