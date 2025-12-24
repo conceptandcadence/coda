@@ -60,15 +60,22 @@ export default async function RootLayout({
   const headerStore = await headers()
   const country = headerStore.get('x-vercel-ip-country')?.toUpperCase() ?? null
 
-  const geoLang: 'en' | 'pt' = country === 'PT' || country === 'BR' ? 'pt' : 'en'
-  const acceptLangGuess = guessLangFromAcceptLanguage(
-    headerStore.get('accept-language'),
-  )
+  // Priority:
+  // 1) Explicit user choice via cookie
+  // 2) If we can confidently geo-locate: PT/BR => Portuguese, otherwise English
+  // 3) Otherwise: default to Portuguese (safer for PT audience). We *never* flip to English
+  //    just because the browser language is English, since many users in Portugal browse in English.
+  const acceptLangGuess = guessLangFromAcceptLanguage(headerStore.get('accept-language'))
+  const isPTorBR = country === 'PT' || country === 'BR'
 
-  const initialLang =
+  const initialLang: 'en' | 'pt' =
     languageCookie === 'en' || languageCookie === 'pt'
       ? languageCookie
-      : acceptLangGuess ?? geoLang
+      : country
+        ? (isPTorBR ? 'pt' : 'en')
+        : acceptLangGuess === 'pt'
+          ? 'pt'
+          : 'pt'
 
   return (
     <html lang={initialLang} suppressHydrationWarning>
