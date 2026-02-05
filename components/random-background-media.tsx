@@ -600,7 +600,7 @@ function BackgroundMediaItem({ item }: { item: ActiveItem }) {
 
     if (imageRef.current?.complete) {
       updateHeight()
-    } else if (videoRef.current?.readyState >= 2) {
+    } else if ((videoRef.current?.readyState ?? 0) >= 2) {
       updateHeight()
     }
 
