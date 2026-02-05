@@ -46,11 +46,11 @@ export function AnimatedFavicon() {
       color = getThemeFg()
     }
 
-    // Update on stage changes (palette) and any other attribute-driven theme changes.
+    // Update on theme changes (dark mode class) and any other attribute-driven theme changes.
     const observer = new MutationObserver(setColorFromTheme)
     observer.observe(document.documentElement, {
       attributes: true,
-      attributeFilter: ['data-stage', 'class', 'style'],
+      attributeFilter: ['class', 'style'],
     })
     setColorFromTheme()
 

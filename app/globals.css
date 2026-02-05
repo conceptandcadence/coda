@@ -19,9 +19,9 @@
     border-color: var(--color-gray-200, currentColor);
   }
 
-  /* Text selection highlight (match cursor color / app palette) */
+  /* Text selection highlight (match cursor color / app theme) */
   ::selection {
-    /* Use a translucent tint so selection stays visible even in low-contrast palettes */
+    /* Use a translucent tint so selection stays visible */
     background: color-mix(
       in oklab,
       var(--cursor-color, var(--app-fg)),
@@ -51,48 +51,27 @@
   --sh-property: #73daca;
   --sh-entity: #e0af68;
 
-  /* Palette system (user will customize colors per stage) */
-  --palette-bg: #5978a6;
-  --palette-fg: #1a1919;
-
-  /* App colors = palette */
-  --app-bg: var(--palette-bg);
-  --app-fg: var(--palette-fg);
-
-  /* Cursor color (override per stage if desired) */
-  --cursor-color: var(--palette-fg);
-
+  /* Light mode colors */
+  --app-bg: #ebe9de;
+  --app-fg: #171817;
+  --cursor-color: var(--app-fg);
 }
 
-/* 5-stage palette definitions (update these colors as desired) */
-html[data-stage='1'] {
-  --palette-bg: #427348;
-  --palette-fg: #a9ade5;
-  --cursor-color: var(--palette-fg);
-}
-html[data-stage='2'] {
-  --palette-bg: #A68450;
-  --palette-fg: #562C1A;
-  --cursor-color: var(--palette-fg);
-}
-html[data-stage='3'] {
-  --palette-bg: #1A273A;
-  --palette-fg: #882F2F;
-  --cursor-color: var(--palette-fg);
-}
-html[data-stage='4'] {
-  --palette-bg: #031125;
-  --palette-fg: #625D8E;
-  --cursor-color: var(--palette-fg);
-}
-html[data-stage='5'] {
-  --palette-bg: #242D22;
-  --palette-fg: #5D62A3;
-  --cursor-color: var(--palette-fg);
+/* Dark mode colors */
+.dark {
+  --app-bg: #181b18;
+  --app-fg: #b6b5b1;
+  --cursor-color: var(--app-fg);
 }
 
-/* Smooth palette transitions */
+/* Smooth theme transitions */
 @media (prefers-reduced-motion: no-preference) {
+  html {
+    transition:
+      background-color 500ms cubic-bezier(0.22, 1, 0.36, 1),
+      color 500ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
   body {
     transition:
       background-color 500ms cubic-bezier(0.22, 1, 0.36, 1),

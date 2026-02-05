@@ -1,14 +1,12 @@
 import type { Metadata, Viewport } from 'next'
-import { cookies } from 'next/headers'
-import { headers } from 'next/headers'
-import { Vesper_Libre, Sometype_Mono } from 'next/font/google'
+import localFont from 'next/font/local'
 import { Analytics } from '@vercel/analytics/react'
 import './globals.css'
 import { AnimatedHeader } from './animated-header'
-import { LanguageProvider } from './language-provider'
-import { PaletteProvider } from './palette-provider'
+import { ThemeProvider } from './theme-provider'
 import { MotionCursor } from '@/components/motion-cursor'
 import { AnimatedFavicon } from '@/components/animated-favicon'
+import { RandomBackgroundMedia } from '@/components/random-background-media'
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -22,79 +20,99 @@ export const metadata: Metadata = {
     canonical: '/'
   },
   title: {
-    default: 'Luke Ragno',
+    default: 'Concept & Cadence',
     template: '%s | Nim'
   },
-  description:  'An american designer and developer based in Porto, Portugal.',
+  description:  'A design & development studio based in NYC.',
+  icons: {
+    icon: [
+      { url: '/public/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/public/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/public/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
+      { url: '/public/favicon.ico', sizes: 'any' },
+    ],
+    apple: [
+      { url: '/public/apple-icon-57x57.png', sizes: '57x57', type: 'image/png' },
+      { url: '/public/apple-icon-60x60.png', sizes: '60x60', type: 'image/png' },
+      { url: '/apple-icon-72x72.png', sizes: '72x72', type: 'image/png' },
+      { url: '/public/apple-icon-76x76.png', sizes: '76x76', type: 'image/png' },
+      { url: '/public/apple-icon-114x114.png', sizes: '114x114', type: 'image/png' },
+      { url: '/public/apple-icon-120x120.png', sizes: '120x120', type: 'image/png' },
+      { url: '/apple-icon-144x144.png', sizes: '144x144', type: 'image/png' },
+      { url: '/public/apple-icon-152x152.png', sizes: '152x152', type: 'image/png' },
+      { url: '/apple-icon-180x180.png', sizes: '180x180', type: 'image/png' },
+      { url: '/public/apple-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
+  manifest: '/manifest.json',
+  other: {
+    'msapplication-TileColor': '#ffffff',
+    'msapplication-TileImage': '/public/ms-icon-144x144.png',
+    'msapplication-config': '/public/browserconfig.xml',
+  },
 };
 
-const geist = Vesper_Libre({
-  variable: '--font-vesper-libre',
-  subsets: ['latin'],
-  weight: ['400', '500', '700', '900'],
-})
-
-const sometypeMono = Sometype_Mono({
+const ppMori = localFont({
+  src: [
+    {
+      path: '../public/fonts/PPMori-Semibold.woff2',
+      weight: '600',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/PPMori-Semibold.otf',
+      weight: '600',
+      style: 'normal',
+    },
+  ],
   variable: '--font-sometype-mono',
-  subsets: ['latin'],
-  weight: 'variable',
+  display: 'swap',
 })
 
-function guessLangFromAcceptLanguage(acceptLanguage: string | null): 'en' | 'pt' | null {
-  if (!acceptLanguage) return null
-  // Example: "en-US,en;q=0.9,pt-PT;q=0.8"
-  const first = acceptLanguage.split(',')[0]?.trim().toLowerCase()
-  if (!first) return null
-  if (first.startsWith('pt')) return 'pt'
-  if (first.startsWith('en')) return 'en'
-  return null
-}
+const exposureTrial = localFont({
+  src: [
+    {
+      path: '../public/fonts/ExposureTrial[-10].woff2',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/ExposureTrial[-10].woff',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/ExposureTrial[-10].otf',
+      weight: '400',
+      style: 'normal',
+    },
+  ],
+  variable: '--font-pp-mori',
+  display: 'swap',
+})
 
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const cookieStore = await cookies()
-  const languageCookie = cookieStore.get('language')?.value
-  const headerStore = await headers()
-  const country = headerStore.get('x-vercel-ip-country')?.toUpperCase() ?? null
-
-  // Priority:
-  // 1) Explicit user choice via cookie
-  // 2) If we can confidently geo-locate: PT/BR => Portuguese, otherwise English
-  // 3) Otherwise: default to Portuguese (safer for PT audience). We *never* flip to English
-  //    just because the browser language is English, since many users in Portugal browse in English.
-  const acceptLangGuess = guessLangFromAcceptLanguage(headerStore.get('accept-language'))
-  const isPTorBR = country === 'PT' || country === 'BR'
-
-  const initialLang: 'en' | 'pt' =
-    languageCookie === 'en' || languageCookie === 'pt'
-      ? languageCookie
-      : country
-        ? (isPTorBR ? 'pt' : 'en')
-        : acceptLangGuess === 'pt'
-          ? 'pt'
-          : 'pt'
-
   return (
-    <html lang={initialLang} suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geist.variable} ${sometypeMono.variable} bg-(--app-bg) text-(--app-fg) tracking-tight antialiased`}
+        className={`${ppMori.variable} ${exposureTrial.variable} bg-(--app-bg) text-(--app-fg) tracking-tight antialiased`}
       >
-        <PaletteProvider>
-          <LanguageProvider initialLang={initialLang}>
-            <AnimatedFavicon />
-            <MotionCursor />
-            <div className="flex min-h-screen w-full flex-col font-(family-name:--font-inter-tight)">
-              <div className="relative mx-auto w-full max-w-4xl flex-1 px-4 pt-20 pb-12">
-                <AnimatedHeader />
-                {children}
-              </div>
+        <ThemeProvider>
+          <AnimatedFavicon />
+          <MotionCursor />
+          <RandomBackgroundMedia />
+          <div className="flex min-h-screen w-full flex-col font-(family-name:--font-inter-tight)">
+            <div className="relative mx-auto w-full max-w-3xl flex-1 px-4 pt-20 pb-12">
+              <AnimatedHeader />
+              {children}
             </div>
-            <Analytics />
-          </LanguageProvider>
-        </PaletteProvider>
+          </div>
+          <Analytics />
+        </ThemeProvider>
       </body>
     </html>
   )

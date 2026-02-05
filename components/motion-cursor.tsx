@@ -29,7 +29,7 @@ export function MotionCursor() {
       }}
       style={{
         borderRadius: 10,
-        mixBlendMode: zone === 'overlay' ? 'difference' : 'multiply',
+        mixBlendMode: 'difference',
       }}
     />
   )

@@ -2,8 +2,9 @@ type Project = {
   name: string
   description: string
   link: string
-  video: string
+  video: string | string[]
   id: string
+  image?: string | string[]
 }
 
 type WorkExperience = {
@@ -26,59 +27,249 @@ type SocialLink = {
   label: string
   link: string
 }
-const greetings = {
-	en: {
-		morning: '🌅 Bom Dia',
-		afternoon: '☀️ Boa Tarde',
-		evening: '🌆 Boa Tarde',
-		night: '🌙 Boa Noite',
-	},
-	pt: {
-		morning: '🌅 Bom Dia',
-		afternoon: '☀️ Boa Tarde',
-		evening: '🌆 Boa Tarde',
-		night: '🌙 Boa Noite',
-	},
-}
 
 export const ABOUT = {
-  name: 'Luke Ragno',
-  email: 'hello@lukeragno.com',
-  contact: {
-    en: 'Contact',
-    pt: 'Contacto',
-  },
-  content: {
-    en: `<p>My name is Luke Ragno.</p>
-<p class="not-prose mb-4">I’m a designer and developer, originally from the United States, based in Porto, where I’ve lived for several years.</p>
-<p class="not-prose mb-4">I’m drawn to work at the intersection of technology, culture, and independent work.</p>
-<p class="not-prose mb-4">I’m currently developing a project focused on supporting independent instructors&mdash;helping them organize their work, stay connected with students, and create more day-to-day stability.</p>`,
-    pt: `<p>Chamo-me Luke Ragno.</p>
-<p class="not-prose mb-4">Sou designer e desenvolvedor, originalmente dos Estados Unidos, baseado no Porto, onde vivo há alguns anos.</p>
-<p class="not-prose mb-4">Interessa-me trabalhar na interseção entre tecnologia, cultura e trabalho independente.</p>
-<p class="not-prose mb-4">Atualmente estou a desenvolver um projeto focado em apoiar instrutores independentes&mdash;ajudando a organizar o trabalho, manter ligação com os alunos e criar mais estabilidade no dia a dia.</p>`,
-  },
+  name: 'Concept & Cadence',
+  email: 'hello@conceptandcadence.com',
+  contact: 'Contact',
+  content: `
+<p class="not-prose mb-4">For several years, we have designed and built digital products with brands, founders, and small teams. The work has been collaborative and deliberate, shaped by people who cared about how things were made, and approached with empathy, restraint, and attention to detail.</p>
+<p class="not-prose mb-4">We are currently focused on a long-term internal project and are no longer taking on new client work.</p>
+<p class="not-prose mb-4">We’re grateful to the people who trusted us and made the work possible—for us.</p>`,
 }
 
 export const PROJECTS: Project[] = [
   {
-    name: 'Motion Primitives Pro',
-    description:
-      'Advanced components and templates to craft beautiful websites.',
-    link: 'https://pro.motion-primitives.com/',
-    video:
-      'https://res.cloudinary.com/read-cv/video/upload/t_v_b/v1/1/profileItems/W2azTw5BVbMXfj7F53G92hMVIn32/newProfileItem/d898be8a-7037-4c71-af0c-8997239b050d.mp4?_a=DATAdtAAZAA0',
-    id: 'project1',
+    name: 'Alex Crane',
+    description: '',
+    link: 'https://alexcrane.co',
+		video: [
+			'/media/alex-crane-01.mp4',
+			'/media/alex-crane-04.mp4',
+			'/media/alex-crane-05.mp4'
+		],
+		image: [
+			'/media/alex-crane-01.jpg',
+			'/media/alex-crane-02.jpg',
+			'/media/alex-crane-04.jpg',
+			'/media/alex-crane-05.webp',
+			'/media/alex-crane-06.jpg'
+		],
+    id: 'alex-crane',
   },
   {
-    name: 'Motion Primitives',
-    description: 'UI kit to make beautiful, animated interfaces.',
-    link: 'https://motion-primitives.com/',
-    video:
-      'https://res.cloudinary.com/read-cv/video/upload/t_v_b/v1/1/profileItems/W2azTw5BVbMXfj7F53G92hMVIn32/XSfIvT7BUWbPRXhrbLed/ee6871c9-8400-49d2-8be9-e32675eabf7e.mp4?_a=DATAdtAAZAA0',
-    id: 'project2',
+    name: 'Ayond',
+    description: '',
+    link: 'https://ayond.us',
+		video: [
+			'/media/ayond-01.mp4',
+			'/media/ayond-02.mp4',
+			'/media/ayond-03.mp4'
+		],
+		image: [
+			'/media/ayond-01.jpg',
+			'/media/ayond-03.jpg'
+		],
+    id: 'ayond',
+  },
+	{
+    name: 'Beauty Independent',
+    description: '',
+    link: 'https://beautyindependent.com',
+		video: [],
+		image: [
+			'/media/beautyindependent-01.png'
+		],
+    id: 'beauty-independent',
+  },
+	{
+    name: 'Caroline Z Hurley',
+    description: '',
+    link: 'https://carolinezhurley.com',
+		video: [
+			'/media/caroline-hurley-01.mp4'
+		],
+		image: [
+			'/media/caroline-hurley-01.jpg',
+			'/media/caroline-hurley-02.jpg',
+			'/media/caroline-hurley-03.webp'
+		],
+    id: 'caroline-hurley',
+  },
+	{
+    name: 'Coil + Drift',
+    description: '',
+    link: 'https://coilanddrift.com',
+		video: [
+			'/media/coil-drift-01.mp4',
+			'/media/coil-drift-02.mp4',
+			'/media/coil-drift-03.mp4'
+		],
+		image: [
+			'/media/coil-drift-01.webp',
+			'/media/coil-drift-02.jpg',
+			'/media/coil-drift-03.webp'
+		],
+    id: 'coil-drift',
+  },
+	{
+    name: 'Counsel Club',
+    description: '',
+    link: 'https://counselclub.ai',
+		video: [],
+		image: [
+			'/media/counsel-club-01.jpg'
+		],
+    id: 'counsel-club',
+  },
+	{
+    name: 'Digdeep',
+    description: '',
+    link: 'https://digdeep.org',
+		video: [],
+		image: [
+			'/media/digdeep-01.gif',
+			'/media/digdeep-02.gif',
+			'/media/dig-deep-03.jpeg',
+			'/media/dig-deep-04.jpg'
+		],
+    id: 'digdeep',
+  },
+	{
+    name: 'DIO',
+    description: '',
+    link: 'https://drinkdio.com',
+		video: [
+			'/media/dio-01.mp4',
+			'/media/dio-02.mp4',
+		],
+		image: [],
+    id: 'dio',
+  },
+	{
+    name: 'DOK',
+    description: '',
+    link: 'https://dokinflatables.com',
+		video: [
+			'/media/dok-01.mp4',
+			'/media/dok-02.mp4',
+		],
+		image: [
+			'/media/dok-01.webp'
+		],
+    id: 'dok',
+  },
+	{
+    name: 'Doré',
+    description: '',
+    link: 'https://wearedore.com',
+		video: [],
+		image: [
+			'/media/dore-01.webp',
+			'/media/dore-02.webp',
+			'/media/dore-03.jpg',
+			'/media/dore-04.jpg',
+			'/media/dore-05.webp',
+		],
+    id: 'dore',
+  },
+	{
+    name: 'First Droplets',
+    description: '',
+    link: 'https://firstdroplets.com',
+		video: [],
+		image: [
+			'/media/first-droplets-01.jpg',
+			'/media/first-droplets-02.jpg',
+			'/media/first-droplets-03.jpg',
+			'/media/first-droplets-05.jpg'
+		],
+    id: 'first-droplets',
+  },
+	{
+    name: 'Light + Ladder',
+    description: '',
+    link: 'https://lightandladder.com',
+		video: [
+			'/media/light-ladder-01.mp4',
+			'/media/light-ladder-02.mp4',
+			'/media/light-ladder-03.mp4',
+		],
+		image: [],
+    id: 'light-and-ladder',
+  },
+	{
+    name: 'maude',
+    description: '',
+    link: 'https://lightandladder.com',
+		video: [
+			'/media/maude-01.mp4',
+			'/media/maude-02.mp4',
+			'/media/maude-03.mp4',
+			'/media/maude-04.mp4',
+		],
+		image: [
+			'/media/maude-01.webp',
+			'/media/maude-02.webp',
+			'/media/maude-03.webp',
+			'/media/maude-06.jpg',
+		],
+    id: 'maude',
+  },
+	{
+    name: 'Paire',
+    description: '',
+    link: 'https://pairela.com',
+		video: [],
+		image: [
+			'/media/paire-01.jpg',
+			'/media/paire-02.jpg',
+			'/media/paire-03.jpg'
+		],
+    id: 'paire',
+  },
+	{
+    name: 'Peet Rivko',
+    description: '',
+    link: 'https://peetrivko.com',
+		video: [],
+		image: [
+			'/media/peet-rivko-01.jpg',
+			'/media/peet-rivko-02.jpg',
+			'/media/peet-rivko-03.webp',
+			'/media/peet-rivko-04.webp',
+		],
+    id: 'peet-rivko',
+  },
+	{
+    name: 'Tinker Watches',
+    description: '',
+    link: 'https://tinkerwatches.com',
+		video: [
+			'/media/tinker-01.mp4',
+			'/media/tinker-02.mp4',
+		],
+		image: [
+			'/media/tinker-03.webp'
+		],
+    id: 'tinker-watches',
+  },
+	{
+    name: 'TRNK',
+    description: '',
+    link: 'https://trnk-nyc.com',
+		video: [],
+		image: [
+			'/media/trnk-01.webp',
+			'/media/trnk-02.webp',
+		],
+    id: 'trnk',
   },
 ]
+
+
+
+
 
 export const WORK_EXPERIENCE: WorkExperience[] = [
   {
@@ -139,20 +330,20 @@ export const BLOG_POSTS: BlogPost[] = [
 export const SOCIAL_LINKS: SocialLink[] = [
   {
     label: 'Github',
-    link: 'https://github.com/lukeragno',
+    link: 'https://github.com/conceptandcadence',
   },
   {
     label: 'Twitter',
-    link: 'https://twitter.com/lukeragno',
+    link: 'https://twitter.com/conceptandcadence',
   },
   {
     label: 'LinkedIn',
-    link: 'https://www.linkedin.com/in/ibelick',
+    link: 'https://www.linkedin.com/in/conceptandcadence',
   },
   {
     label: 'Instagram',
-    link: 'https://www.instagram.com/ibelick',
+    link: 'https://www.instagram.com/conceptandcadence',
   },
 ]
 
-export const EMAIL = 'hello@lukeragno.com'
+export const EMAIL = 'hello@conceptandcadence.com'

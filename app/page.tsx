@@ -5,7 +5,6 @@ import { EmailMagneticLink } from '@/components/email-magnetic-link'
 import Link from 'next/link'
 import { useMagneticPull } from 'motion-plus/react'
 import { ABOUT } from './data'
-import { useLanguage } from './language-provider'
 import { preventClickIfSelectingText } from '@/lib/prevent-click-on-selection'
 
 const VARIANTS_SECTION = {
@@ -21,10 +20,8 @@ const TRANSITION_SECTION = {
 }
 
 export default function Personal() {
-  const { lang } = useLanguage()
   const [ready, setReady] = React.useState(false)
   const headerDelay = 0.35
-  const privacyLabel = lang === 'pt' ? 'Privacidade' : 'Privacy'
   const privacyRef = React.useRef<HTMLSpanElement>(null)
   const privacyPull = useMagneticPull(privacyRef, 0.1)
 
@@ -44,8 +41,8 @@ export default function Personal() {
           transition={{ ...TRANSITION_SECTION, delay: headerDelay }}
         >
           <div
-            className="prose max-w-none text-3xl lg:text-4xl font-(family-name:--font-vesper-libre) text-current prose-headings:text-current prose-p:text-current prose-a:text-current prose-strong:text-current prose-li:text-current mt-12"
-            dangerouslySetInnerHTML={{ __html: ABOUT.content[lang] }}
+            className="prose max-w-none text-3xl lg:text-3xl font-(family-name:--font-pp-mori) text-current prose-headings:text-current prose-p:text-current prose-a:text-current prose-strong:text-current prose-li:text-current mt-12"
+            dangerouslySetInnerHTML={{ __html: ABOUT.content }}
           />
         </motion.div>
       </div>
@@ -53,11 +50,11 @@ export default function Personal() {
         variants={VARIANTS_SECTION}
         transition={{ ...TRANSITION_SECTION, delay: headerDelay + 0.15 }}
       >
-        <h3 className="font-(family-name:--font-sometype-mono) mb-3 lg:mb-5 text-sm font-medium ">{ABOUT.contact[lang]}</h3>
-        <p className="mb-5 font-(family-name:--font-vesper-libre) text-current">
+        <h3 className="font-(family-name:--font-sometype-mono) mb-3 lg:mb-5 text-sm font-medium ">{ABOUT.contact}</h3>
+        <p className="mb-5 font-(family-name:--font-pp-mori) text-current">
           <EmailMagneticLink
             email={ABOUT.email}
-            className="text-3xl lg:text-4xl"
+            className="text-3xl lg:text-3xl"
           />
         </p>
         <p className="font-(family-name:--font-sometype-mono) text-sm text-current mt-24">
@@ -74,7 +71,7 @@ export default function Personal() {
               style={privacyPull as any}
               className="underline underline-offset-4 hover:text-current"
             >
-              {privacyLabel}
+              Privacy
             </motion.span>
           </Link>
         </p>
