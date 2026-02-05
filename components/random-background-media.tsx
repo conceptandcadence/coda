@@ -581,8 +581,12 @@ function BackgroundMediaItem({ item }: { item: ActiveItem }) {
       const element = imageRef.current || videoRef.current
       if (!element) return
 
-      const naturalWidth = element.naturalWidth || element.videoWidth || item.size
-      const naturalHeight = element.naturalHeight || element.videoHeight || item.size
+      const naturalWidth =
+        ('naturalWidth' in element ? element.naturalWidth : element.videoWidth) ||
+        item.size
+      const naturalHeight =
+        ('naturalHeight' in element ? element.naturalHeight : element.videoHeight) ||
+        item.size
       
       if (naturalWidth > 0 && naturalHeight > 0) {
         const aspectRatio = naturalHeight / naturalWidth
