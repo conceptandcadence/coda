@@ -17,19 +17,13 @@ type ActiveItem = {
   createdAt: number // timestamp when item was created
 }
 
-const VARIANTS = {
-  hidden: { opacity: 0, filter: 'blur(8px)' },
-  visible: { opacity: 1, filter: 'blur(0px)' },
-}
-
 const TRANSITION = {
   duration: 2,
   ease: [0.22, 1, 0.36, 1],
 }
 
 // Random number between min and max
-const random = (min: number, max: number) =>
-  Math.random() * (max - min) + min
+const random = (min: number, max: number) => Math.random() * (max - min) + min
 
 // Random integer between min and max (inclusive)
 const randomInt = (min: number, max: number) =>
@@ -37,7 +31,10 @@ const randomInt = (min: number, max: number) =>
 
 export function RandomBackgroundMedia() {
   const [activeItems, setActiveItems] = React.useState<ActiveItem[]>([])
-  const [viewportSize, setViewportSize] = React.useState({ width: 0, height: 0 })
+  const [viewportSize, setViewportSize] = React.useState({
+    width: 0,
+    height: 0,
+  })
   const prefersReducedMotion = React.useRef(false)
   const preloadedVideos = React.useRef<Set<string>>(new Set())
   const preloadedImages = React.useRef<Set<string>>(new Set())
@@ -56,95 +53,101 @@ export function RandomBackgroundMedia() {
   }, [])
 
   // Preload media for a specific project (prioritized)
-  const preloadProjectMedia = React.useCallback((project: Project): Promise<void> => {
-    return new Promise((resolve) => {
-      const mediaToPreload: string[] = []
-      
-      // Collect all media URLs for this project
-      if (Array.isArray(project.video)) {
-        project.video.forEach((url) => {
-          if (!preloadedVideos.current.has(url)) {
-            mediaToPreload.push(url)
-          }
-        })
-      } else if (project.video && !preloadedVideos.current.has(project.video)) {
-        mediaToPreload.push(project.video)
-      }
+  const preloadProjectMedia = React.useCallback(
+    (project: Project): Promise<void> => {
+      return new Promise((resolve) => {
+        const mediaToPreload: string[] = []
 
-      if (project.image) {
-        if (Array.isArray(project.image)) {
-          project.image.forEach((url) => {
-            if (!preloadedImages.current.has(url)) {
+        // Collect all media URLs for this project
+        if (Array.isArray(project.video)) {
+          project.video.forEach((url) => {
+            if (!preloadedVideos.current.has(url)) {
               mediaToPreload.push(url)
             }
           })
-        } else if (!preloadedImages.current.has(project.image)) {
-          mediaToPreload.push(project.image)
+        } else if (
+          project.video &&
+          !preloadedVideos.current.has(project.video)
+        ) {
+          mediaToPreload.push(project.video)
         }
-      }
 
-      if (mediaToPreload.length === 0) {
-        resolve()
-        return
-      }
+        if (project.image) {
+          if (Array.isArray(project.image)) {
+            project.image.forEach((url) => {
+              if (!preloadedImages.current.has(url)) {
+                mediaToPreload.push(url)
+              }
+            })
+          } else if (!preloadedImages.current.has(project.image)) {
+            mediaToPreload.push(project.image)
+          }
+        }
 
-      let loadedCount = 0
-      const totalCount = mediaToPreload.length
-
-      const checkComplete = () => {
-        loadedCount++
-        if (loadedCount >= totalCount) {
+        if (mediaToPreload.length === 0) {
           resolve()
+          return
         }
-      }
 
-      mediaToPreload.forEach((url) => {
-        // Determine if it's a video or image based on extension or try both
-        const isVideo = url.match(/\.(mp4|webm|ogg|mov|m4v)$/i)
-        
-        if (isVideo) {
-          if (preloadedVideos.current.has(url)) {
-            checkComplete()
-            return
+        let loadedCount = 0
+        const totalCount = mediaToPreload.length
+
+        const checkComplete = () => {
+          loadedCount++
+          if (loadedCount >= totalCount) {
+            resolve()
           }
-
-          const video = document.createElement('video')
-          video.preload = 'auto'
-          video.muted = true
-          video.playsInline = true
-          video.src = url
-
-          video.addEventListener('loadeddata', () => {
-            preloadedVideos.current.add(url)
-            checkComplete()
-          })
-
-          video.addEventListener('error', () => {
-            checkComplete() // Continue even if one fails
-          })
-
-          video.load()
-        } else {
-          if (preloadedImages.current.has(url)) {
-            checkComplete()
-            return
-          }
-
-          const img = new Image()
-          img.src = url
-
-          img.addEventListener('load', () => {
-            preloadedImages.current.add(url)
-            checkComplete()
-          })
-
-          img.addEventListener('error', () => {
-            checkComplete() // Continue even if one fails
-          })
         }
+
+        mediaToPreload.forEach((url) => {
+          // Determine if it's a video or image based on extension or try both
+          const isVideo = url.match(/\.(mp4|webm|ogg|mov|m4v)$/i)
+
+          if (isVideo) {
+            if (preloadedVideos.current.has(url)) {
+              checkComplete()
+              return
+            }
+
+            const video = document.createElement('video')
+            video.preload = 'auto'
+            video.muted = true
+            video.playsInline = true
+            video.src = url
+
+            video.addEventListener('loadeddata', () => {
+              preloadedVideos.current.add(url)
+              checkComplete()
+            })
+
+            video.addEventListener('error', () => {
+              checkComplete() // Continue even if one fails
+            })
+
+            video.load()
+          } else {
+            if (preloadedImages.current.has(url)) {
+              checkComplete()
+              return
+            }
+
+            const img = new Image()
+            img.src = url
+
+            img.addEventListener('load', () => {
+              preloadedImages.current.add(url)
+              checkComplete()
+            })
+
+            img.addEventListener('error', () => {
+              checkComplete() // Continue even if one fails
+            })
+          }
+        })
       })
-    })
-  }, [])
+    },
+    [],
+  )
 
   // Preload all media files after page load (background, lower priority)
   React.useEffect(() => {
@@ -170,7 +173,7 @@ export function RandomBackgroundMedia() {
     // Preload remaining media in background (after prioritized items)
     const preloadMedia = (url: string) => {
       const isVideo = url.match(/\.(mp4|webm|ogg|mov|m4v)$/i)
-      
+
       if (isVideo) {
         if (preloadedVideos.current.has(url)) return
 
@@ -253,28 +256,41 @@ export function RandomBackgroundMedia() {
 
   // Generate random position within viewport with padding, avoiding main content area and existing items
   const getRandomPosition = React.useCallback(
-    (itemWidth: number, itemHeight: number, existingItems: ActiveItem[] = []) => {
+    (
+      itemWidth: number,
+      itemHeight: number,
+      existingItems: ActiveItem[] = [],
+    ) => {
       const padding = 50
       const titleHeight = 30 // Approximate height for title + margin
       const totalItemHeight = itemHeight + titleHeight
       const minDistance = 100 // Minimum distance from existing items
-      
+
       // Main content area bounds (matching layout.tsx: max-w-3xl, centered, px-4, pt-20)
       const contentMaxWidth = 768 // max-w-3xl = 48rem = 768px
       const contentPadding = 16 // px-4 = 1rem = 16px
       const contentTop = 80 // pt-20 = 5rem = 80px
-      const contentLeft = Math.max(0, (viewportSize.width - contentMaxWidth) / 2)
+      const contentLeft = Math.max(
+        0,
+        (viewportSize.width - contentMaxWidth) / 2,
+      )
       const contentRight = contentLeft + contentMaxWidth
       const contentBottom = viewportSize.height // Content extends to bottom
-      
+
       // Try multiple positions to find one that doesn't overlap with content or existing items
       let attempts = 0
       const maxAttempts = 50
-      
+
       while (attempts < maxAttempts) {
-        const x = random(padding, Math.max(0, viewportSize.width - itemWidth - padding))
-        const y = random(padding, Math.max(0, viewportSize.height - totalItemHeight - padding))
-        
+        const x = random(
+          padding,
+          Math.max(0, viewportSize.width - itemWidth - padding),
+        )
+        const y = random(
+          padding,
+          Math.max(0, viewportSize.height - totalItemHeight - padding),
+        )
+
         // Calculate item bounds including title
         const itemLeft = x
         const itemRight = x + itemWidth
@@ -282,28 +298,31 @@ export function RandomBackgroundMedia() {
         const itemBottom = y + totalItemHeight
         const itemCenterX = x + itemWidth / 2
         const itemCenterY = y + totalItemHeight / 2
-        
+
         // Check overlap with content area
         const overlapLeft = Math.max(itemLeft, contentLeft - contentPadding)
         const overlapRight = Math.min(itemRight, contentRight + contentPadding)
         const overlapTop = Math.max(itemTop, contentTop)
         const overlapBottom = Math.min(itemBottom, contentBottom)
-        
+
         const overlapWidth = Math.max(0, overlapRight - overlapLeft)
         const overlapHeight = Math.max(0, overlapBottom - overlapTop)
         const overlapArea = overlapWidth * overlapHeight
         const itemArea = itemWidth * totalItemHeight
         const overlapRatio = overlapArea / itemArea
-        
+
         // Allow up to 30% overlap (some overlap is okay, but not mostly)
         // Also ensure title area (bottom part) doesn't overlap too much
         const titleTop = y + itemHeight
         const titleBottom = y + totalItemHeight
         const titleOverlapTop = Math.max(titleTop, contentTop)
         const titleOverlapBottom = Math.min(titleBottom, contentBottom)
-        const titleOverlapHeight = Math.max(0, titleOverlapBottom - titleOverlapTop)
+        const titleOverlapHeight = Math.max(
+          0,
+          titleOverlapBottom - titleOverlapTop,
+        )
         const titleOverlapRatio = titleOverlapHeight / titleHeight
-        
+
         // Check distance from existing items
         let tooCloseToExisting = false
         for (const existing of existingItems) {
@@ -313,73 +332,84 @@ export function RandomBackgroundMedia() {
           const existingTotalHeight = existingHeight + existingTitleHeight
           const existingCenterX = existing.x + existingWidth / 2
           const existingCenterY = existing.y + existingTotalHeight / 2
-          
+
           const distanceX = Math.abs(itemCenterX - existingCenterX)
           const distanceY = Math.abs(itemCenterY - existingCenterY)
-          const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY)
-          
+          const distance = Math.sqrt(
+            distanceX * distanceX + distanceY * distanceY,
+          )
+
           // Check if items would overlap
           const existingLeft = existing.x
           const existingRight = existing.x + existingWidth
           const existingTop = existing.y
           const existingBottom = existing.y + existingTotalHeight
-          
+
           const itemsOverlap = !(
             itemRight < existingLeft ||
             itemLeft > existingRight ||
             itemBottom < existingTop ||
             itemTop > existingBottom
           )
-          
+
           if (itemsOverlap || distance < minDistance) {
             tooCloseToExisting = true
             break
           }
         }
-        
+
         // Accept position if overlap is reasonable, title isn't mostly obscured, and not too close to existing items
-        if (overlapRatio < 0.3 && titleOverlapRatio < 0.5 && !tooCloseToExisting) {
+        if (
+          overlapRatio < 0.3 &&
+          titleOverlapRatio < 0.5 &&
+          !tooCloseToExisting
+        ) {
           return { x, y }
         }
-        
+
         attempts++
       }
-      
+
       // Fallback: if we can't find a good position, place it outside content area
       // Prefer left or right edges, away from existing items
       const preferLeft = Math.random() > 0.5
       let x = preferLeft
         ? random(padding, contentLeft - itemWidth - padding)
-        : random(contentRight + contentPadding + padding, viewportSize.width - itemWidth - padding)
-      let y = random(padding, Math.max(0, viewportSize.height - totalItemHeight - padding))
-      
+        : random(
+            contentRight + contentPadding + padding,
+            viewportSize.width - itemWidth - padding,
+          )
+      const y = random(
+        padding,
+        Math.max(0, viewportSize.height - totalItemHeight - padding),
+      )
+
       // Try to place away from existing items
       if (existingItems.length > 0) {
         const existing = existingItems[0]
-        const existingTitleHeight = 30
-        const existingWidth = existing.size
-        const existingHeight = existing.height || existingWidth
-        const existingTotalHeight = existingHeight + existingTitleHeight
-        
+
         // Place on opposite side
         if (existing.x < viewportSize.width / 2) {
           // Existing is on left, place on right
           x = random(
-            Math.max(contentRight + contentPadding + padding, viewportSize.width / 2),
-            viewportSize.width - itemWidth - padding
+            Math.max(
+              contentRight + contentPadding + padding,
+              viewportSize.width / 2,
+            ),
+            viewportSize.width - itemWidth - padding,
           )
         } else {
           // Existing is on right, place on left
           x = random(
             padding,
-            Math.min(contentLeft - itemWidth - padding, viewportSize.width / 2)
+            Math.min(contentLeft - itemWidth - padding, viewportSize.width / 2),
           )
         }
       }
-      
+
       return { x, y }
     },
-    [viewportSize]
+    [viewportSize],
   )
 
   // Generate random width between 150-200px
@@ -392,7 +422,7 @@ export function RandomBackgroundMedia() {
     const maxDistance = random(10, 30) // Total distance to move (pixels)
     const angle = random(0, Math.PI * 2) // Random direction
     const pixelsPerSecond = maxDistance / (duration / 1000) // Convert to pixels per second
-    
+
     return {
       moveX: Math.cos(angle) * pixelsPerSecond,
       moveY: Math.sin(angle) * pixelsPerSecond,
@@ -403,14 +433,14 @@ export function RandomBackgroundMedia() {
   const getRandomProject = React.useCallback((activeItems: ActiveItem[]) => {
     const activeProjectIds = new Set(activeItems.map((item) => item.project.id))
     const availableProjects = PROJECTS.filter(
-      (project) => !activeProjectIds.has(project.id)
+      (project) => !activeProjectIds.has(project.id),
     )
-    
+
     // If all projects are displayed, allow any project (shouldn't happen with 1-2 items)
     if (availableProjects.length === 0) {
       return PROJECTS[randomInt(0, PROJECTS.length - 1)]
     }
-    
+
     return availableProjects[randomInt(0, availableProjects.length - 1)]
   }, [])
 
@@ -419,7 +449,6 @@ export function RandomBackgroundMedia() {
     if (prefersReducedMotion.current || viewportSize.width === 0) return
 
     let timeoutId: NodeJS.Timeout | null = null
-    const EXIT_ANIMATION_DURATION = 2000 // 2 seconds for exit animation
 
     // Function to schedule next item
     const scheduleNext = () => {
@@ -435,7 +464,7 @@ export function RandomBackgroundMedia() {
         const estimatedAspectRatio = 9 / 16 // height/width for 16:9
         const createdAt = Date.now()
         const movement = getRandomMovement(delay)
-        
+
         // Get current state to determine action
         let currentState: ActiveItem[] = []
         setActiveItems((prev) => {
@@ -459,9 +488,12 @@ export function RandomBackgroundMedia() {
             project = getRandomProject([])
           }
         } else {
-          const itemToRemove = currentState[randomInt(0, currentState.length - 1)]
-          remainingItems = currentState.filter((item) => item.id !== itemToRemove.id)
-          
+          const itemToRemove =
+            currentState[randomInt(0, currentState.length - 1)]
+          remainingItems = currentState.filter(
+            (item) => item.id !== itemToRemove.id,
+          )
+
           if (Math.random() < 0.5 && remainingItems.length === 1) {
             action = 'removeAndAdd'
             project = getRandomProject(remainingItems)
@@ -480,16 +512,20 @@ export function RandomBackgroundMedia() {
         // Preload media for the project that will be displayed
         if (project) {
           await preloadProjectMedia(project)
-          
+
           // After preloading, add the item
           const width = getRandomSize()
           const estimatedHeight = width * estimatedAspectRatio
           const position = getRandomPosition(
             width,
             estimatedHeight,
-            action === 'removeAndAdd' ? remainingItems : action === 'replace' ? [] : currentState
+            action === 'removeAndAdd'
+              ? remainingItems
+              : action === 'replace'
+                ? []
+                : currentState,
           )
-          
+
           const newItem: ActiveItem = {
             project,
             id: `${project.id}-${createdAt}-${Math.random()}`,
@@ -523,14 +559,14 @@ export function RandomBackgroundMedia() {
       const movement = getRandomMovement(initialDelay)
       const estimatedAspectRatio = 9 / 16 // height/width for 16:9
       const project = getRandomProject([]) // No active items initially
-      
+
       // Preload media before displaying
       await preloadProjectMedia(project)
-      
+
       const width = getRandomSize()
       const estimatedHeight = width * estimatedAspectRatio
       const position = getRandomPosition(width, estimatedHeight, [])
-      
+
       const newItem: ActiveItem = {
         project,
         id: `${project.id}-${createdAt}-${Math.random()}`,
@@ -542,7 +578,7 @@ export function RandomBackgroundMedia() {
         duration: initialDelay,
         createdAt,
       }
-      
+
       setActiveItems([newItem])
       // Start scheduling after initial item
       scheduleNext()
@@ -552,14 +588,21 @@ export function RandomBackgroundMedia() {
       clearTimeout(initialTimeout)
       if (timeoutId) clearTimeout(timeoutId)
     }
-  }, [viewportSize.width, getRandomSize, getRandomPosition, getRandomProject, getRandomMovement, preloadProjectMedia])
+  }, [
+    viewportSize.width,
+    getRandomSize,
+    getRandomPosition,
+    getRandomProject,
+    getRandomMovement,
+    preloadProjectMedia,
+  ])
 
   if (prefersReducedMotion.current || viewportSize.width === 0) {
     return null
   }
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
       <AnimatePresence mode="popLayout">
         {activeItems.map((item) => (
           <BackgroundMediaItem key={item.id} item={item} />
@@ -582,12 +625,14 @@ function BackgroundMediaItem({ item }: { item: ActiveItem }) {
       if (!element) return
 
       const naturalWidth =
-        ('naturalWidth' in element ? element.naturalWidth : element.videoWidth) ||
-        item.size
+        ('naturalWidth' in element
+          ? element.naturalWidth
+          : element.videoWidth) || item.size
       const naturalHeight =
-        ('naturalHeight' in element ? element.naturalHeight : element.videoHeight) ||
-        item.size
-      
+        ('naturalHeight' in element
+          ? element.naturalHeight
+          : element.videoHeight) || item.size
+
       if (naturalWidth > 0 && naturalHeight > 0) {
         const aspectRatio = naturalHeight / naturalWidth
         const calculatedHeight = item.size * aspectRatio
@@ -636,7 +681,7 @@ function BackgroundMediaItem({ item }: { item: ActiveItem }) {
           }
         })
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     )
 
     observer.observe(containerRef.current)
@@ -651,13 +696,13 @@ function BackgroundMediaItem({ item }: { item: ActiveItem }) {
     const images = Array.isArray(item.project.image)
       ? item.project.image
       : item.project.image
-      ? [item.project.image]
-      : []
+        ? [item.project.image]
+        : []
     const videos = Array.isArray(item.project.video)
       ? item.project.video
       : item.project.video
-      ? [item.project.video]
-      : []
+        ? [item.project.video]
+        : []
 
     const hasImage = images.length > 0
     const hasVideo = videos.length > 0
@@ -686,7 +731,7 @@ function BackgroundMediaItem({ item }: { item: ActiveItem }) {
   return (
     <motion.div
       ref={containerRef}
-      className="absolute will-change-transform flex flex-col"
+      className="absolute flex flex-col will-change-transform"
       initial={{ opacity: 0, filter: 'blur(8px)', x: item.x, y: item.y }}
       animate={{
         opacity: 1,
@@ -712,42 +757,43 @@ function BackgroundMediaItem({ item }: { item: ActiveItem }) {
       }}
     >
       <div style={{ width: `${item.size}px`, height: `${displayHeight}px` }}>
-      {useImage && hasImage && getRandomMedia.image ? (
-        <img
-          ref={imageRef}
-          src={getRandomMedia.image}
-          alt={item.project.name}
-          className="w-full h-full object-cover rounded-lg opacity-60"
-          loading="lazy"
-          onError={(e) => {
-            // Fallback to video if image fails to load
-            if (hasVideo && getRandomMedia.video) {
-              e.currentTarget.style.display = 'none'
-              const video = e.currentTarget.nextElementSibling as HTMLVideoElement
-              if (video) video.style.display = 'block'
-            }
-          }}
-        />
-      ) : null}
-      {(!useImage || !hasImage) && hasVideo && getRandomMedia.video ? (
-        <video
-          ref={videoRef}
-          src={getRandomMedia.video}
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover rounded-lg opacity-60"
-          style={{ display: 'block' }}
-          onError={(e) => {
-            console.error('Video failed to load:', getRandomMedia.video)
-          }}
-        />
-      ) : null}
+        {useImage && hasImage && getRandomMedia.image ? (
+          // eslint-disable-next-line @next/next/no-img-element -- Dynamic project media; next/image requires known dimensions
+          <img
+            ref={imageRef}
+            src={getRandomMedia.image}
+            alt={item.project.name}
+            className="h-full w-full rounded-lg object-cover opacity-60"
+            loading="lazy"
+            onError={(e) => {
+              // Fallback to video if image fails to load
+              if (hasVideo && getRandomMedia.video) {
+                e.currentTarget.style.display = 'none'
+                const video = e.currentTarget
+                  .nextElementSibling as HTMLVideoElement
+                if (video) video.style.display = 'block'
+              }
+            }}
+          />
+        ) : null}
+        {(!useImage || !hasImage) && hasVideo && getRandomMedia.video ? (
+          <video
+            ref={videoRef}
+            src={getRandomMedia.video}
+            loop
+            muted
+            playsInline
+            className="h-full w-full rounded-lg object-cover opacity-60"
+            style={{ display: 'block' }}
+            onError={() => {
+              console.error('Video failed to load:', getRandomMedia.video)
+            }}
+          />
+        ) : null}
       </div>
-      <p className="font-(family-name:--font-sometype-mono) text-[12px] opacity-60 text-current mt-2 text-center truncate">
+      <p className="mt-2 truncate text-center font-(family-name:--font-sometype-mono) text-[12px] text-current opacity-60">
         {item.project.name}
       </p>
     </motion.div>
   )
 }
-

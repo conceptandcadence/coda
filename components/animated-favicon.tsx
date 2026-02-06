@@ -13,7 +13,9 @@ function getThemeFg(): string {
 function getOrCreateFaviconLink(): HTMLLinkElement {
   const existing =
     (document.querySelector('link[rel="icon"]') as HTMLLinkElement | null) ??
-    (document.querySelector('link[rel="shortcut icon"]') as HTMLLinkElement | null)
+    (document.querySelector(
+      'link[rel="shortcut icon"]',
+    ) as HTMLLinkElement | null)
 
   if (existing) return existing
 
@@ -94,5 +96,3 @@ export function AnimatedFavicon() {
 
   return null
 }
-
-

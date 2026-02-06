@@ -18,7 +18,9 @@ const ThemeContext = React.createContext<ThemeContextValue | null>(null)
 
 function getSystemTheme(): Theme {
   if (typeof window === 'undefined') return 'light'
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  return window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light'
 }
 
 function readStoredTheme(): Theme | null {
@@ -120,4 +122,3 @@ export function useTheme() {
   if (!ctx) throw new Error('useTheme must be used within ThemeProvider')
   return ctx
 }
-

@@ -26,25 +26,21 @@ const COPY = {
 } as const
 
 export function PrivacyContent() {
-  const t = COPY
-
   return (
     <main className="space-y-12">
       <header className="space-y-4">
-        <div className="flex items-baseline justify-between gap-6 font-(family-name:--font-sometype-mono) text-sm mb-12 pt-6 border-t border-current">
+        <div className="mb-12 flex items-baseline justify-between gap-6 border-t border-current pt-6 font-(family-name:--font-sometype-mono) text-sm">
           <Link
             href="/"
             data-cursor-zone="overlay"
-            className="inline-flex items-center gap-2 text-current font-medium"
+            className="inline-flex items-center gap-2 font-medium text-current"
             onClickCapture={preventClickIfSelectingText}
           >
             {COPY.back}
           </Link>
-          <span className="text-current">
-            {COPY.updated}: 2025-12-22
-          </span>
+          <span className="text-current">{COPY.updated}: 2025-12-22</span>
         </div>
-        <h1 className="text-3xl lg:text-5xl font-(family-name:--font-pp-mori) tracking-tight">
+        <h1 className="font-(family-name:--font-pp-mori) text-3xl tracking-tight lg:text-5xl">
           {COPY.title}
         </h1>
       </header>
@@ -54,10 +50,10 @@ export function PrivacyContent() {
           <h2 className="font-(family-name:--font-sometype-mono) text-sm font-medium">
             {COPY.summaryTitle}
           </h2>
-          <p className="font-(family-name:--font-pp-mori) text-3xl leading-tight lg:text-3xl text-current">
+          <p className="font-(family-name:--font-pp-mori) text-3xl leading-tight text-current lg:text-3xl">
             {COPY.summaryBody}
           </p>
-          <p className="font-(family-name:--font-pp-mori) text-3xl leading-tight lg:text-3xl text-current">
+          <p className="font-(family-name:--font-pp-mori) text-3xl leading-tight text-current lg:text-3xl">
             {COPY.noBanner}
           </p>
         </div>
@@ -66,10 +62,10 @@ export function PrivacyContent() {
           <h2 className="font-(family-name:--font-sometype-mono) text-sm font-medium">
             {COPY.analyticsTitle}
           </h2>
-          <p className="font-(family-name:--font-pp-mori) text-3xl leading-tight lg:text-3xl text-current">
+          <p className="font-(family-name:--font-pp-mori) text-3xl leading-tight text-current lg:text-3xl">
             {COPY.analyticsBody}
           </p>
-          <p className="font-(family-name:--font-pp-mori) text-3xl leading-tight lg:text-3xl text-current">
+          <p className="font-(family-name:--font-pp-mori) text-3xl leading-tight text-current lg:text-3xl">
             {COPY.legalBasis}
           </p>
         </div>
@@ -78,7 +74,7 @@ export function PrivacyContent() {
           <h2 className="font-(family-name:--font-sometype-mono) text-sm font-medium">
             {COPY.localPrefsTitle}
           </h2>
-          <p className="font-(family-name:--font-pp-mori) text-3xl leading-tight lg:text-3xl text-current">
+          <p className="font-(family-name:--font-pp-mori) text-3xl leading-tight text-current lg:text-3xl">
             {COPY.localPrefsBody}
           </p>
         </div>
@@ -87,7 +83,7 @@ export function PrivacyContent() {
           <h2 className="font-(family-name:--font-sometype-mono) text-sm font-medium">
             {COPY.contactTitle}
           </h2>
-          <p className="font-(family-name:--font-pp-mori) text-3xl leading-tight lg:text-3xl text-current">
+          <p className="font-(family-name:--font-pp-mori) text-3xl leading-tight text-current lg:text-3xl">
             {COPY.contactBody}{' '}
             <a
               className="text-current underline underline-offset-8"
@@ -104,5 +100,3 @@ export function PrivacyContent() {
     </main>
   )
 }
-
-

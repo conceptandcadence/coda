@@ -17,13 +17,13 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL('https://nim-fawn.vercel.app/'),
   alternates: {
-    canonical: '/'
+    canonical: '/',
   },
   title: {
     default: 'Concept & Cadence',
-    template: '%s | Nim'
+    template: '%s | Nim',
   },
-  description:  'A design & development studio based in NYC.',
+  description: 'A design & development studio based in NYC.',
   icons: {
     icon: [
       { url: '/public/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
@@ -32,14 +32,38 @@ export const metadata: Metadata = {
       { url: '/public/favicon.ico', sizes: 'any' },
     ],
     apple: [
-      { url: '/public/apple-icon-57x57.png', sizes: '57x57', type: 'image/png' },
-      { url: '/public/apple-icon-60x60.png', sizes: '60x60', type: 'image/png' },
+      {
+        url: '/public/apple-icon-57x57.png',
+        sizes: '57x57',
+        type: 'image/png',
+      },
+      {
+        url: '/public/apple-icon-60x60.png',
+        sizes: '60x60',
+        type: 'image/png',
+      },
       { url: '/apple-icon-72x72.png', sizes: '72x72', type: 'image/png' },
-      { url: '/public/apple-icon-76x76.png', sizes: '76x76', type: 'image/png' },
-      { url: '/public/apple-icon-114x114.png', sizes: '114x114', type: 'image/png' },
-      { url: '/public/apple-icon-120x120.png', sizes: '120x120', type: 'image/png' },
+      {
+        url: '/public/apple-icon-76x76.png',
+        sizes: '76x76',
+        type: 'image/png',
+      },
+      {
+        url: '/public/apple-icon-114x114.png',
+        sizes: '114x114',
+        type: 'image/png',
+      },
+      {
+        url: '/public/apple-icon-120x120.png',
+        sizes: '120x120',
+        type: 'image/png',
+      },
       { url: '/apple-icon-144x144.png', sizes: '144x144', type: 'image/png' },
-      { url: '/public/apple-icon-152x152.png', sizes: '152x152', type: 'image/png' },
+      {
+        url: '/public/apple-icon-152x152.png',
+        sizes: '152x152',
+        type: 'image/png',
+      },
       { url: '/apple-icon-180x180.png', sizes: '180x180', type: 'image/png' },
       { url: '/public/apple-icon.png', sizes: '180x180', type: 'image/png' },
     ],
@@ -50,7 +74,7 @@ export const metadata: Metadata = {
     'msapplication-TileImage': '/public/ms-icon-144x144.png',
     'msapplication-config': '/public/browserconfig.xml',
   },
-};
+}
 
 const ppMori = localFont({
   src: [
@@ -99,7 +123,7 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${ppMori.variable} ${exposureTrial.variable} bg-(--app-bg) text-(--app-fg) tracking-tight antialiased`}
+        className={`${ppMori.variable} ${exposureTrial.variable} bg-(--app-bg) tracking-tight text-(--app-fg) antialiased`}
       >
         <ThemeProvider>
           <AnimatedFavicon />

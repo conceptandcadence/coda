@@ -1,6 +1,4 @@
-export function preventClickIfSelectingText(
-  e: React.MouseEvent<HTMLElement>,
-) {
+export function preventClickIfSelectingText(e: React.MouseEvent<HTMLElement>) {
   const sel = window.getSelection?.()
   if (!sel) return
   if (sel.isCollapsed) return
@@ -9,5 +7,3 @@ export function preventClickIfSelectingText(
   e.preventDefault()
   e.stopPropagation()
 }
-
-

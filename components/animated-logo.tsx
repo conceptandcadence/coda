@@ -17,9 +17,7 @@ export function AnimatedLogo() {
 
     // Restart animations by removing and re-adding
     elements.forEach((el) => {
-      const animation = el.style.animation
       el.style.animation = 'none'
-      // Force reflow
       void el.offsetWidth
       el.style.animation = ''
     })

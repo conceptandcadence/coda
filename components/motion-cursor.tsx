@@ -4,7 +4,7 @@ import { Cursor, useCursorState } from 'motion-plus/react'
 import * as React from 'react'
 
 export function MotionCursor() {
-  const { zone } = useCursorState()
+  useCursorState()
 
   return (
     <Cursor
@@ -34,5 +34,3 @@ export function MotionCursor() {
     />
   )
 }
-
-

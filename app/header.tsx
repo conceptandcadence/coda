@@ -18,8 +18,8 @@ function ThemeToggleIcon({ theme }: { theme: 'light' | 'dark' }) {
       strokeLinejoin="round"
     >
       {theme === 'dark' ? (
-      <motion.g
-        initial={false}
+        <motion.g
+          initial={false}
           animate={{ rotate: 0, opacity: 1 }}
           exit={{ rotate: -90, opacity: 0 }}
           transition={{ duration: 0.2 }}
@@ -33,10 +33,10 @@ function ThemeToggleIcon({ theme }: { theme: 'light' | 'dark' }) {
           <line x1="21" y1="12" x2="23" y2="12" />
           <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
           <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-      </motion.g>
+        </motion.g>
       ) : (
         <motion.g
-            initial={false}
+          initial={false}
           animate={{ rotate: 0, opacity: 1 }}
           exit={{ rotate: 90, opacity: 0 }}
           transition={{ duration: 0.2 }}
@@ -62,7 +62,7 @@ export function Header() {
             type="button"
             onClick={toggleTheme}
             data-cursor-zone="overlay"
-            className="inline-flex items-center justify-center font-(family-name:--font-sometype-mono) text-sm font-medium text-current transition-opacity duration-100 opacity-80 hover:opacity-100 focus-visible:outline-2 p-2"
+            className="inline-flex items-center justify-center p-2 font-(family-name:--font-sometype-mono) text-sm font-medium text-current opacity-80 transition-opacity duration-100 hover:opacity-100 focus-visible:outline-2"
             aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
           >
             <ThemeToggleIcon theme={theme} />

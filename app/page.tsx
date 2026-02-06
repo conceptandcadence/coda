@@ -41,7 +41,7 @@ export default function Personal() {
           transition={{ ...TRANSITION_SECTION, delay: headerDelay }}
         >
           <div
-            className="prose max-w-none text-3xl lg:text-3xl font-(family-name:--font-pp-mori) text-current prose-headings:text-current prose-p:text-current prose-a:text-current prose-strong:text-current prose-li:text-current mt-12"
+            className="prose prose-headings:text-current prose-p:text-current prose-a:text-current prose-strong:text-current prose-li:text-current mt-12 max-w-none font-(family-name:--font-pp-mori) text-3xl text-current lg:text-3xl"
             dangerouslySetInnerHTML={{ __html: ABOUT.content }}
           />
         </motion.div>
@@ -50,14 +50,16 @@ export default function Personal() {
         variants={VARIANTS_SECTION}
         transition={{ ...TRANSITION_SECTION, delay: headerDelay + 0.15 }}
       >
-        <h3 className="font-(family-name:--font-sometype-mono) mb-3 lg:mb-5 text-sm font-medium ">{ABOUT.contact}</h3>
+        <h3 className="mb-3 font-(family-name:--font-sometype-mono) text-sm font-medium lg:mb-5">
+          {ABOUT.contact}
+        </h3>
         <p className="mb-5 font-(family-name:--font-pp-mori) text-current">
           <EmailMagneticLink
             email={ABOUT.email}
             className="text-3xl lg:text-3xl"
           />
         </p>
-        <p className="font-(family-name:--font-sometype-mono) text-sm text-current mt-24">
+        <p className="mt-24 font-(family-name:--font-sometype-mono) text-sm text-current">
           <Link
             href="/privacy"
             data-cursor-zone="overlay"
@@ -68,7 +70,7 @@ export default function Personal() {
               ref={privacyRef}
               // motion-plus MotionValue types can differ slightly from motion/react types
               // (depends on dependency resolution). Runtime behavior is correct.
-              style={privacyPull as any}
+              style={privacyPull as unknown as React.CSSProperties}
               className="underline underline-offset-4 hover:text-current"
             >
               Privacy

@@ -10,7 +10,10 @@ type EmailMagneticLinkProps = {
   className?: string
 }
 
-export function EmailMagneticLink({ email, className }: EmailMagneticLinkProps) {
+export function EmailMagneticLink({
+  email,
+  className,
+}: EmailMagneticLinkProps) {
   const ref = React.useRef<HTMLAnchorElement>(null)
   const pull = useMagneticPull(ref, 0.1)
 
@@ -26,7 +29,7 @@ export function EmailMagneticLink({ email, className }: EmailMagneticLinkProps) 
       <motion.span
         // motion-plus MotionValue types can differ slightly from motion/react types
         // (depends on dependency resolution). Runtime behavior is correct.
-        style={pull as any}
+        style={pull as unknown as React.CSSProperties}
         variants={{ pressed: { scale: 0.98 } }}
         className="inline-block"
       >
@@ -35,5 +38,3 @@ export function EmailMagneticLink({ email, className }: EmailMagneticLinkProps) 
     </motion.a>
   )
 }
-
-
